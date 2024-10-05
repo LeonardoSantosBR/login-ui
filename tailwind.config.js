@@ -6,9 +6,11 @@ export default {
   theme: {
     extend: {
       screens: {
-        'tablet': '640px',
-        'laptop': '1024px',
-        'desktop': '1280px',
+        'break1': '1194px',
+        'break2': '1384px',
+        'break3': '960px',
+        'break4': '696px',
+        'break5': '407px',
       },
       spacing: {
         "29": "29%",

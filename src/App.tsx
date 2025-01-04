@@ -1,8 +1,7 @@
-import SignIn from "./pages/signin/signin";
-import SignUp from "./pages/signup/signup";
+import RoutesOfAplication from "./routes/routes";
 
 function App() {
-  return <SignIn />;
+  return <RoutesOfAplication />;
 }
 
 export default App;

@@ -1,5 +1,6 @@
 import { ScanFace } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } = useForm({
@@ -86,7 +87,7 @@ function SignIn() {
               Entrar
             </button>
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer">
-              Não tem conta?
+              <Link to="/signup">Não tem conta?</Link>
             </p>
           </div>
         </form>

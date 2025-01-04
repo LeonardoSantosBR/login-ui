@@ -2,7 +2,7 @@ import { BadgePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-interface ICreateAccountRequest {
+interface ISignupRequest {
   name: string;
   email: string;
   password: string;
@@ -10,7 +10,7 @@ interface ICreateAccountRequest {
 
 function SignUp() {
   const { control, handleSubmit, formState, register } =
-    useForm<ICreateAccountRequest>({
+    useForm<ISignupRequest>({
       defaultValues: {
         name: "",
         email: "",
@@ -18,7 +18,7 @@ function SignUp() {
       },
     });
 
-    async function handleSignup(data: any) {
+    async function handleSignup(data: ISignupRequest) {
       console.log(data);
     }
 

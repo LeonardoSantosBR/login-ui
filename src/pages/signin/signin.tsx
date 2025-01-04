@@ -2,15 +2,21 @@ import { ScanFace } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-function SignIn() {
-  const { register, control, handleSubmit, formState } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+interface ISigninRequest {
+  email: string;
+  password: string;
+}
 
-  async function handleSignin(data: any) {
+function SignIn() {
+  const { register, control, handleSubmit, formState } =
+    useForm<ISigninRequest>({
+      defaultValues: {
+        email: "",
+        password: "",
+      },
+    });
+
+  async function handleSignin(data: ISigninRequest) {
     console.log(data);
   }
 

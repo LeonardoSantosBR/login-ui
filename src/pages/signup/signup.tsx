@@ -1,5 +1,6 @@
 import { BadgePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 interface ICreateAccountRequest {
   name: string;
@@ -119,7 +120,7 @@ function SignUp() {
               Criar conta
             </button>
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer">
-              Já tem conta?
+              <Link to="/signin">Já tem conta?</Link>
             </p>
           </div>
         </form>

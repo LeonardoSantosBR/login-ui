@@ -3,11 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error-message";
-
-interface ISigninRequest {
-  email: string;
-  password: string;
-}
+import { ISigninRequest } from "../../interfaces/Isignin";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =

@@ -3,12 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import CreateClientButton from "../../components/buttons/create-client-button";
 import ErrorMessage from "../../components/error-message";
-
-interface ISignupRequest {
-  name: string;
-  email: string;
-  password: string;
-}
+import { ISignupRequest } from "../../interfaces/Isignup";
 
 function SignUp() {
   const { control, handleSubmit, formState, register } =

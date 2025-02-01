@@ -1,6 +1,8 @@
 import { BadgePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import CreateClientButton from "../../components/buttons/create-client-button";
+import ErrorMessage from "../../components/error-message";
 
 interface ISignupRequest {
   name: string;
@@ -18,9 +20,9 @@ function SignUp() {
       },
     });
 
-    async function handleSignup(data: ISignupRequest) {
-      console.log(data);
-    }
+  async function handleSignup(data: ISignupRequest) {
+    console.log(data);
+  }
 
   return (
     <div className="w-[100vw] h-[100vh] flex justify-center items-center md:w-290">
@@ -51,7 +53,7 @@ function SignUp() {
               />
               {formState.errors.name && (
                 <p className="text-red-500 text-xs italic">
-                  {formState.errors.name.message}
+                  <ErrorMessage message={formState.errors.name.message} />
                 </p>
               )}
             </div>
@@ -81,7 +83,7 @@ function SignUp() {
               />
               {formState.errors.email && (
                 <p className="text-red-500 text-xs italic">
-                  {formState.errors.email.message}
+                  <ErrorMessage message={formState.errors.email.message} />
                 </p>
               )}
             </div>
@@ -107,18 +109,13 @@ function SignUp() {
               />
               {formState.errors.password && (
                 <p className="text-red-500 text-xs italic">
-                  {formState.errors.password.message}
+                  <ErrorMessage message={formState.errors.password.message} />
                 </p>
               )}
             </div>
           </div>
           <div className="w-full h-10 flex flex-col items-center justify-center ">
-            <button
-              className="bg-cyan-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2"
-              type="submit"
-            >
-              Criar conta
-            </button>
+            <CreateClientButton />
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer">
               <Link to="/signin">Já tem conta?</Link>
             </p>

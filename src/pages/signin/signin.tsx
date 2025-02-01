@@ -1,6 +1,8 @@
 import { ScanFace } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import SigninButton from "../../components/buttons/signin-button";
+import ErrorMessage from "../../components/error-message";
 
 interface ISigninRequest {
   email: string;
@@ -54,7 +56,7 @@ function SignIn() {
               />
               {formState.errors.email && (
                 <p className="text-red-500 text-xs italic">
-                  {formState.errors.email.message}
+                  <ErrorMessage message={formState.errors.email.message} />
                 </p>
               )}
             </div>
@@ -80,18 +82,13 @@ function SignIn() {
               />
               {formState.errors.password && (
                 <p className="text-red-500 text-xs italic">
-                  {formState.errors.password.message}
+                  <ErrorMessage message={formState.errors.password.message} />
                 </p>
               )}
             </div>
           </div>
           <div className="w-full h-10 flex flex-col items-center justify-center ">
-            <button
-              className="bg-cyan-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2"
-              type="submit"
-            >
-              Entrar
-            </button>
+            <SigninButton />
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer">
               <Link to="/signup">Não tem conta?</Link>
             </p>

@@ -21,98 +21,89 @@ function SignUp() {
   }
 
   return (
-    <div className="w-[100vw] h-[100vh] flex justify-center items-center md:w-290">
-      <div className="w-[70%] h-[60%] break1:w-[54%] break2:w-[47%] break3:w-[39%] break4:w-[30%] rounded-md bg-login_background_5">
-        <div className="w-[100%] h-[30%] flex justify-center items-center">
+    <div className="w-full min-h-screen flex justify-center items-center px-4">
+      <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl min-h-[50%] rounded-md bg-login_background_5 shadow-lg p-6">
+        {/* Ícone no topo */}
+        <div className="w-full flex justify-center items-center py-4">
           <BadgePlus size={60} color="white" />
         </div>
-        <form onSubmit={handleSubmit(handleSignup)}>
-          <div className="p-7">
-            <div className="mb-4">
-              <Controller
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <InputForm
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                      id="name"
-                      type="text"
-                      placeholder="Nome"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  );
-                }}
-                {...register("name", {
-                  required: "Nome precisa ser preenchido.",
-                })}
-              />
-              {formState.errors.name && (
-                <p className="text-red-500 text-xs italic">
-                  <ErrorMessage message={formState.errors.name.message} />
-                </p>
+
+        {/* Formulário */}
+        <form
+          onSubmit={handleSubmit(handleSignup)}
+          className="flex flex-col gap-4"
+        >
+          {/* Campo Nome */}
+          <div className="flex flex-col gap-2">
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <InputForm
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="Nome"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
               )}
-            </div>
-            <div className="mb-4">
-              <Controller
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <InputForm
-                      defaultValue={""}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                      id="email"
-                      type="email"
-                      placeholder="Email"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  );
-                }}
-                {...register("email", {
-                  required: "Email é obrigatório.",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Escreva um email válido.",
-                  },
-                })}
-              />
-              {formState.errors.email && (
-                <p className="text-red-500 text-xs italic">
-                  <ErrorMessage message={formState.errors.email.message} />
-                </p>
-              )}
-            </div>
-            <div className="mb-4 ">
-              <Controller
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <InputForm
-                      defaultValue={""}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                      id="password"
-                      type="password"
-                      placeholder="Senha"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  );
-                }}
-                {...register("password", {
-                  required: "Senha precisa ser preenchida.",
-                })}
-              />
-              {formState.errors.password && (
-                <p className="text-red-500 text-xs italic">
-                  <ErrorMessage message={formState.errors.password.message} />
-                </p>
-              )}
-            </div>
+              {...register("name", {
+                required: "Nome precisa ser preenchido.",
+              })}
+            />
+            <ErrorMessage message={formState.errors.name?.message} />
           </div>
-          <div className="w-full h-10 flex flex-col items-center justify-center ">
+
+          {/* Campo Email */}
+          <div className="flex flex-col gap-2">
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <InputForm
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+              {...register("email", {
+                required: "Email é obrigatório.",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Escreva um email válido.",
+                },
+              })}
+            />
+            <ErrorMessage message={formState.errors.email?.message} />
+          </div>
+
+          {/* Campo Senha */}
+          <div className="flex flex-col gap-2">
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <InputForm
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type="password"
+                  placeholder="Senha"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+              {...register("password", {
+                required: "Senha precisa ser preenchida.",
+              })}
+            />
+            <ErrorMessage message={formState.errors.password?.message} />
+          </div>
+
+          {/* Botão de Cadastro */}
+          <div className="w-full flex flex-col items-center gap-3">
             <CreateClientButton />
-            <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer">
+            <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer text-sm">
               <Link to="/signin">Já tem conta?</Link>
             </p>
           </div>

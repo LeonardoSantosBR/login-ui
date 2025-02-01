@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import CreateClientButton from "../../components/buttons/create-client-button";
 import ErrorMessage from "../../components/error-message";
+import InputForm from "../../components/inputs/input-form";
 import { ISignupRequest } from "../../interfaces/Isignup";
 
 function SignUp() {
@@ -32,7 +33,7 @@ function SignUp() {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <input
+                    <InputForm
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                       id="name"
                       type="text"
@@ -57,7 +58,7 @@ function SignUp() {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <input
+                    <InputForm
                       defaultValue={""}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                       id="email"
@@ -87,7 +88,7 @@ function SignUp() {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <input
+                    <InputForm
                       defaultValue={""}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                       id="password"

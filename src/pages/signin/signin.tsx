@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error-message";
+import InputForm from "../../components/inputs/input-form";
 import { ISigninRequest } from "../../interfaces/Isignin";
 
 function SignIn() {
@@ -31,7 +32,7 @@ function SignIn() {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <input
+                    <InputForm
                       defaultValue={""}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                       id="email"
@@ -61,7 +62,7 @@ function SignIn() {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <input
+                    <InputForm
                       defaultValue={""}
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
                       id="password"

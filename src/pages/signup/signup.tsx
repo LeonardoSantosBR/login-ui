@@ -2,7 +2,7 @@ import { BadgePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import CreateClientButton from "../../components/buttons/create-client-button";
-import ErrorMessage from "../../components/error-message";
+import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
 import { ISignupRequest } from "../../interfaces";
 

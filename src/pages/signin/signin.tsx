@@ -5,6 +5,7 @@ import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
 import { ISigninRequest } from "../interfaces";
+import { emailPattern } from "../patterns";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =
@@ -45,10 +46,7 @@ function SignIn() {
               )}
               {...register("email", {
                 required: "Email é obrigatório.",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Escreva um email válido.",
-                },
+                pattern: emailPattern,
               })}
             />
             <ErrorMessage message={formState.errors.email?.message} />

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CreateClientButton from "../../components/buttons/create-client-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISignupRequest } from "../../interfaces";
+import { ISignupRequest } from "../interfaces";
 
 function SignUp() {
   const { control, handleSubmit, formState, register } =

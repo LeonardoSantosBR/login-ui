@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISigninRequest } from "../../interfaces";
-import { emailPattern } from "../../patterns";
+import { ISigninRequest } from "./interfaces";
+import { emailPattern } from "./patterns";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =

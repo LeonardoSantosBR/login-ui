@@ -6,8 +6,12 @@ export const tokenSlice = createSlice({
     value: "",
   },
   reducers: {
-    getToken: (state, actions) => {},
-    setToken: (state, actions) => {},
+    getToken: (state, actions) => {
+
+    },
+    setToken: (state, actions) => {
+      
+    },
   },
 });
 

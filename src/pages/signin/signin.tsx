@@ -5,7 +5,8 @@ import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
 import { ISigninRequest } from "./interfaces";
-import { emailPattern } from "./patterns";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SigninSchema } from "../../zod/signin/signin-validation";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =
@@ -14,6 +15,7 @@ function SignIn() {
         email: "",
         password: "",
       },
+      resolver: zodResolver(SigninSchema)
     });
 
   async function handleSignin(data: ISigninRequest) {
@@ -44,10 +46,7 @@ function SignIn() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("email", {
-                required: "Email é obrigatório.",
-                pattern: emailPattern,
-              })}
+              {...register("email")}
             />
             <ErrorMessage message={formState.errors.email?.message} />
           </div>
@@ -65,9 +64,7 @@ function SignIn() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("password", {
-                required: "Senha precisa ser preenchida.",
-              })}
+              {...register("password")}
             />
             <ErrorMessage message={formState.errors.password?.message} />
           </div>

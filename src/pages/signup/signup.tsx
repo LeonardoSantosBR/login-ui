@@ -29,7 +29,6 @@ function SignUp() {
         <div className="w-full flex justify-center items-center py-4">
           <BadgePlus size={60} color="white" />
         </div>
-
         <form
           onSubmit={handleSubmit(handleSignup)}
           className="flex flex-col gap-4"
@@ -51,7 +50,6 @@ function SignUp() {
             />
             <ErrorMessage message={formState.errors.name?.message} />
           </div>
-
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -69,7 +67,6 @@ function SignUp() {
             />
             <ErrorMessage message={formState.errors.email?.message} />
           </div>
-
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -87,7 +84,6 @@ function SignUp() {
             />
             <ErrorMessage message={formState.errors.password?.message} />
           </div>
-
           <div className="w-full flex flex-col items-center gap-3">
             <CreateClientButton />
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer text-sm">

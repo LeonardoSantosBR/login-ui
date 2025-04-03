@@ -15,7 +15,7 @@ function SignIn() {
         email: "",
         password: "",
       },
-      resolver: zodResolver(SigninSchema)
+      resolver: zodResolver(SigninSchema),
     });
 
   async function handleSignin(data: ISigninRequest) {
@@ -28,7 +28,6 @@ function SignIn() {
         <div className="w-full flex justify-center items-center py-4">
           <ScanFace size={60} color="white" />
         </div>
-
         <form
           onSubmit={handleSubmit(handleSignin)}
           className="flex flex-col gap-4"
@@ -50,7 +49,6 @@ function SignIn() {
             />
             <ErrorMessage message={formState.errors.email?.message} />
           </div>
-
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -68,7 +66,6 @@ function SignIn() {
             />
             <ErrorMessage message={formState.errors.password?.message} />
           </div>
-
           <div className="w-full flex flex-col items-center gap-3">
             <SigninButton />
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer text-sm">

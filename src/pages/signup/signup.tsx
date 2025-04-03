@@ -5,7 +5,8 @@ import CreateClientButton from "../../components/buttons/create-client-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
 import { ISignupRequest } from "./interfaces";
-import { emailPattern } from "./patterns";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupSchema } from "../../schemas/pages";
 
 function SignUp() {
   const { control, handleSubmit, formState, register } =
@@ -15,6 +16,7 @@ function SignUp() {
         email: "",
         password: "",
       },
+      resolver: zodResolver(SignupSchema),
     });
 
   async function handleSignup(data: ISignupRequest) {
@@ -45,9 +47,7 @@ function SignUp() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("name", {
-                required: "Nome precisa ser preenchido.",
-              })}
+              {...register("name")}
             />
             <ErrorMessage message={formState.errors.name?.message} />
           </div>
@@ -65,10 +65,7 @@ function SignUp() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("email", {
-                required: "Email é obrigatório.",
-                pattern: emailPattern,
-              })}
+              {...register("email")}
             />
             <ErrorMessage message={formState.errors.email?.message} />
           </div>
@@ -86,9 +83,7 @@ function SignUp() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("password", {
-                required: "Senha precisa ser preenchida.",
-              })}
+              {...register("password")}
             />
             <ErrorMessage message={formState.errors.password?.message} />
           </div>

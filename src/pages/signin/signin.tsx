@@ -6,7 +6,7 @@ import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
 import { ISigninRequest } from "./interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SigninSchema } from "../../zod/signin/signin-validation";
+import { SigninSchema } from "../../schemas/pages";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =

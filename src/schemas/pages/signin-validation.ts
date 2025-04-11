@@ -1,5 +1,5 @@
 import { z, ZodType } from "zod";
-import { ISigninRequest } from "../../pages/signin/interfaces";
+import { ISigninRequest } from "../../interfaces";
 
 export const SigninSchema: ZodType<ISigninRequest> = z.object({
   email: z

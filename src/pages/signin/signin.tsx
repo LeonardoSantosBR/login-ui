@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISigninRequest } from "./interfaces";
+import { ISigninRequest } from "../../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninSchema } from "../../schemas/pages";
+import { handleSignin } from "./handle-signin";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =
@@ -18,9 +22,35 @@ function SignIn() {
       resolver: zodResolver(SigninSchema),
     });
 
-  async function handleSignin(data: ISigninRequest) {
-    console.log(data);
-  }
+  const handleMutation = useMutation({
+    mutationFn: handleSignin,
+    onSuccess: (data) => {
+      //salva o token e redireciona para a tela de meu perfil.
+      console.log("Usuário logado com sucesso.", data);
+    },
+    onError: (error) => {
+      let errorMessage = "Login falhou por algo em exceção.";
+
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data.message;
+        toast.error(errorMessage, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        });
+      }
+    },
+  });
+
+  const onSubmit = (data: ISigninRequest) => {
+    handleMutation.mutate(data);
+  };
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center px-4">
@@ -28,10 +58,7 @@ function SignIn() {
         <div className="w-full flex justify-center items-center py-4">
           <ScanFace size={60} color="white" />
         </div>
-        <form
-          onSubmit={handleSubmit(handleSignin)}
-          className="flex flex-col gap-4"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -74,6 +101,7 @@ function SignIn() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

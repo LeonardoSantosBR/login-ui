@@ -1,5 +1,5 @@
 import { z, ZodType } from "zod";
-import { ISignupRequest } from "../../pages/signup/interfaces";
+import { ISignupRequest } from "../../interfaces";
 
 export const SignupSchema: ZodType<ISignupRequest> = z.object({
   name: z

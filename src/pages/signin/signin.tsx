@@ -25,7 +25,7 @@ function SignIn() {
 
   const handleMutation = useMutation({
     mutationFn: handleSignin,
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       //salva o token e redireciona para a tela de meu perfil.
     },
     onError: (error) => {

@@ -10,7 +10,8 @@ import { SigninSchema } from "../../schemas/pages";
 import { handleSignin } from "./handle-signin";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import ToastErrorMessage from "../../components/error/toast/toast-error-message";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =
@@ -26,24 +27,13 @@ function SignIn() {
     mutationFn: handleSignin,
     onSuccess: (data) => {
       //salva o token e redireciona para a tela de meu perfil.
-      console.log("Usuário logado com sucesso.", data);
     },
     onError: (error) => {
       let errorMessage = "Login falhou por algo em exceção.";
 
       if (error instanceof AxiosError) {
         errorMessage = error.response?.data.message;
-        toast.error(errorMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-        });
+        ToastErrorMessage({errorMessage})
       }
     },
   });

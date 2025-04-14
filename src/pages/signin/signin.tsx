@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISigninRequest } from "../../interfaces";
+import { ISigninRequest, IsigninSucess } from "../../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninSchema } from "../../schemas/pages";
 import { handleSignin } from "./handle-signin";
@@ -12,6 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ToastContainer } from "react-toastify";
 import ToastErrorMessage from "../../components/error/toast/toast-error-message";
+import Spinner from "../../components/spinner/spinner";
 
 function SignIn() {
   const { register, control, handleSubmit, formState } =
@@ -23,9 +24,9 @@ function SignIn() {
       resolver: zodResolver(SigninSchema),
     });
 
-  const handleMutation = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: handleSignin,
-    onSuccess: (data: any) => {
+    onSuccess: (data: IsigninSucess) => {
       //salva o token e redireciona para a tela de meu perfil.
     },
     onError: (error) => {
@@ -33,13 +34,13 @@ function SignIn() {
 
       if (error instanceof AxiosError) {
         errorMessage = error.response?.data.message;
-        ToastErrorMessage({errorMessage})
+        ToastErrorMessage({ errorMessage });
       }
     },
   });
 
   const onSubmit = (data: ISigninRequest) => {
-    handleMutation.mutate(data);
+    mutate(data);
   };
 
   return (
@@ -92,6 +93,7 @@ function SignIn() {
         </form>
       </div>
       <ToastContainer />
+      {isLoading && <Spinner />}
     </div>
   );
 }

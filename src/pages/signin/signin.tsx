@@ -1,6 +1,6 @@
 import { ScanFace } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
@@ -15,6 +15,7 @@ import ToastErrorMessage from "../../components/error/toast/toast-error-message"
 import Spinner from "../../components/spinner/spinner";
 
 function SignIn() {
+  const navigate = useNavigate();
   const { register, control, handleSubmit, formState } =
     useForm<ISigninRequest>({
       defaultValues: {
@@ -28,10 +29,13 @@ function SignIn() {
     mutationFn: handleSignin,
     onSuccess: (data: IsigninSucess) => {
       //salva o token e redireciona para a tela de meu perfil.
+      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("token", data.accessToken);
+      
+      navigate("/profile");
     },
     onError: (error) => {
       let errorMessage = "Login falhou por algo em exceção.";
-
       if (error instanceof AxiosError) {
         errorMessage = error.response?.data.message;
         ToastErrorMessage({ errorMessage });

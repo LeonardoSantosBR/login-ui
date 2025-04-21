@@ -13,6 +13,7 @@ import { AxiosError } from "axios";
 import { ToastContainer } from "react-toastify";
 import ToastErrorMessage from "../../components/error/toast/toast-error-message";
 import Spinner from "../../components/spinner/spinner";
+import { localStorageUtil } from "../../utils/localstorage-util";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -29,9 +30,7 @@ function SignIn() {
     mutationFn: handleSignin,
     onSuccess: (data: IsigninSucess) => {
       //salva o token e redireciona para a tela de meu perfil.
-      localStorage.setItem("user", JSON.stringify(data));
-      localStorage.setItem("token", data.accessToken);
-      
+      localStorageUtil(data);
       navigate("/profile");
     },
     onError: (error) => {

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SigninButton from "../../components/buttons/signin-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISigninRequest, IsigninSucess } from "../../interfaces";
+import { ISigninRequest, ISigninSucess } from "../../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninSchema } from "../../schemas/pages";
 import { handleSignin } from "./handle-signin";
@@ -28,8 +28,7 @@ function SignIn() {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: handleSignin,
-    onSuccess: (data: IsigninSucess) => {
-      //salva o token e redireciona para a tela de meu perfil.
+    onSuccess: (data: ISigninSucess) => {
       localStorageUtil(data);
       navigate("/profile");
     },

@@ -3,19 +3,42 @@ import { useNavigate } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import InputForm from "../../components/inputs/input-form";
 import PatchClientButton from "../../components/buttons/patch-client-button";
-import { ISPatchClientRequest } from "../../interfaces";
-import { LogOut } from 'lucide-react';
+import { IPatchClientRequest } from "../../interfaces";
+import { LogOut } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { handleProfile } from "./handle-profile";
+import { getUserId, setTokenNull } from "../../utils/localstorage-util";
+import { useEffect } from "react";
 
 function Profile() {
   const navigate = useNavigate();
-  const { register, control, handleSubmit } = useForm({
+  const { register, control, handleSubmit, reset } = useForm({
     defaultValues: {
       email: "",
       name: "",
     },
   });
 
-  const onSubmit = (data: ISPatchClientRequest) => {}
+  const { data } = useQuery({
+    queryKey: ["profile", getUserId()],
+    queryFn: handleProfile,
+  });
+
+  useEffect(() => {
+    if (data) {
+      reset({
+        email: data.email,
+        name: data.name,
+      });
+    }
+  }, [data, reset]);
+
+  const logout = () => {
+    setTokenNull();
+    navigate("/signin");
+  };
+
+  const onSubmit = (data: IPatchClientRequest) => {};
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center px-4">
@@ -55,7 +78,7 @@ function Profile() {
           </div>
           <div className="w-full flex justify-around items-center gap-3 mt-5">
             <PatchClientButton />
-            <LogOut color="white"/>
+            <LogOut color="white" onClick={() => logout()} />
           </div>
         </form>
       </div>

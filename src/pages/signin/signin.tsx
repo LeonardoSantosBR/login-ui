@@ -13,7 +13,7 @@ import { AxiosError } from "axios";
 import { ToastContainer } from "react-toastify";
 import ToastErrorMessage from "../../components/error/toast/toast-error-message";
 import Spinner from "../../components/spinner/spinner";
-import { localStorageUtil } from "../../utils/localstorage-util";
+import { setTokenUtil } from "../../utils/localstorage-util";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function SignIn() {
   const { mutate, isLoading } = useMutation({
     mutationFn: handleSignin,
     onSuccess: (data: ISigninSucess) => {
-      localStorageUtil(data);
+      setTokenUtil(data);
       navigate("/profile");
     },
     onError: (error) => {

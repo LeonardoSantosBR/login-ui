@@ -1,4 +1,4 @@
-export interface ISPatchClientRequest {
+export interface IPatchClientRequest {
     name: string;
     email: string;
   }

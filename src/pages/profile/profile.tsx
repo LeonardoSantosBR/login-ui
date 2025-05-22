@@ -5,14 +5,19 @@ import InputForm from "../../components/inputs/input-form";
 import PatchClientButton from "../../components/buttons/patch-client-button";
 import { IPatchClientRequest } from "../../interfaces";
 import { LogOut } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { handleProfile } from "./handle-profile";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProfile } from "../../http/get-profile";
 import { getUserId, setTokenNull } from "../../utils/localstorage-util";
 import { useEffect } from "react";
+import ToastSuccessMessage from "../../components/error/toast/success.message";
+import { AxiosError } from "axios";
+import ToastErrorMessage from "../../components/error/toast/toast-error-message";
+import { patchProfileHttp } from "../../http/patch-profile";
 
 function Profile() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset } = useForm({
+  const { register, control, handleSubmit, reset } = useForm<IPatchClientRequest>({
     defaultValues: {
       email: "",
       name: "",
@@ -21,24 +26,44 @@ function Profile() {
 
   const { data } = useQuery({
     queryKey: ["profile", getUserId()],
-    queryFn: handleProfile,
+    queryFn: getProfile,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
     if (data) {
       reset({
+        id: data.id,
         email: data.email,
         name: data.name,
       });
     }
   }, [data, reset]);
 
+  const { mutate } = useMutation({
+    mutationFn: patchProfileHttp,
+    onSuccess: () => {
+      const successMessage = "Conta atualizada.";
+      ToastSuccessMessage({ successMessage });
+      queryClient.invalidateQueries({ queryKey: ["profile", getUserId()] });
+    },
+    onError: (error) => {
+      let errorMessage = "Login falhou por algo em exceção.";
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data.message;
+        ToastErrorMessage({ errorMessage });
+      }
+    },
+  });
+
   const logout = () => {
     setTokenNull();
     navigate("/signin");
   };
 
-  const onSubmit = (data: IPatchClientRequest) => {};
+  const onSubmit = (data: IPatchClientRequest) => {
+    mutate(data);
+  };
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center px-4">

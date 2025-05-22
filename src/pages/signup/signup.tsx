@@ -13,7 +13,7 @@ import ToastErrorMessage from "../../components/error/toast/toast-error-message"
 import ToastSuccessMessage from "../../components/error/toast/success.message";
 import { ToastContainer } from "react-toastify";
 import Spinner from "../../components/spinner/spinner";
-import { handleSignup } from "./handle-signup";
+import { postSignupHttp } from "../../http/post-signup";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ function SignUp() {
     });
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: handleSignup,
+    mutationFn: postSignupHttp,
     onSuccess: () => {
       const successMessage = "Conta criada com sucesso.";
       navigate("/signin");

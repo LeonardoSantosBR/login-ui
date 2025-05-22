@@ -7,13 +7,13 @@ import InputForm from "../../components/inputs/input-form";
 import { ISigninRequest, ISigninSucess } from "../../interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninSchema } from "../../schemas/pages";
-import { handleSignin } from "./handle-signin";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ToastContainer } from "react-toastify";
 import ToastErrorMessage from "../../components/error/toast/toast-error-message";
 import Spinner from "../../components/spinner/spinner";
 import { setTokenUtil } from "../../utils/localstorage-util";
+import { postSigninHttp } from "../../http/post-signin";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function SignIn() {
     });
 
   const { mutate, isLoading } = useMutation({
-    mutationFn: handleSignin,
+    mutationFn: postSigninHttp,
     onSuccess: (data: ISigninSucess) => {
       setTokenUtil(data);
       navigate("/profile");

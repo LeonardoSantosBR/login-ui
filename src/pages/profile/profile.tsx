@@ -30,16 +30,6 @@ function Profile() {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => {
-    if (data) {
-      reset({
-        id: data.id,
-        email: data.email,
-        name: data.name,
-      });
-    }
-  }, [data, reset]);
-
   const { mutate } = useMutation({
     mutationFn: patchProfileHttp,
     onSuccess: () => {
@@ -55,6 +45,16 @@ function Profile() {
       }
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      reset({
+        id: data.id,
+        email: data.email,
+        name: data.name,
+      });
+    }
+  }, [data, reset]);
 
   const logout = () => {
     setTokenNull();

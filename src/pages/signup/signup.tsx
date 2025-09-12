@@ -1,13 +1,22 @@
 import { BadgePlus } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateClientButton from "../../components/buttons/create-client-button";
 import ErrorMessage from "../../components/error/error-message";
 import InputForm from "../../components/inputs/input-form";
-import { ISignupRequest } from "./interfaces";
-import { emailPattern } from "./patterns";
+import { ISignupRequest } from "../../interfaces";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupSchema } from "../../schemas/pages";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import ToastErrorMessage from "../../components/error/toast/toast-error-message";
+import ToastSuccessMessage from "../../components/error/toast/success.message";
+import { ToastContainer } from "react-toastify";
+import Spinner from "../../components/spinner/spinner";
+import { postSignupHttp } from "../../http/post-signup";
 
 function SignUp() {
+  const navigate = useNavigate();
   const { control, handleSubmit, formState, register } =
     useForm<ISignupRequest>({
       defaultValues: {
@@ -15,10 +24,27 @@ function SignUp() {
         email: "",
         password: "",
       },
+      resolver: zodResolver(SignupSchema),
     });
 
-  async function handleSignup(data: ISignupRequest) {
-    console.log(data);
+  const { mutate, isLoading } = useMutation({
+    mutationFn: postSignupHttp,
+    onSuccess: () => {
+      const successMessage = "Conta criada com sucesso.";
+      navigate("/signin");
+      ToastSuccessMessage({ successMessage });
+    },
+    onError: (error) => {
+      let errorMessage = "Login falhou por algo em exceção.";
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data.message;
+        ToastErrorMessage({ errorMessage });
+      }
+    },
+  });
+
+  async function onSubmit(data: ISignupRequest) {
+    mutate(data);
   }
 
   return (
@@ -27,31 +53,7 @@ function SignUp() {
         <div className="w-full flex justify-center items-center py-4">
           <BadgePlus size={60} color="white" />
         </div>
-
-        <form
-          onSubmit={handleSubmit(handleSignup)}
-          className="flex flex-col gap-4"
-        >
-          <div className="flex flex-col gap-2">
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <InputForm
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  type="text"
-                  placeholder="Nome"
-                  value={field.value}
-                  onChange={field.onChange}
-                />
-              )}
-              {...register("name", {
-                required: "Nome precisa ser preenchido.",
-              })}
-            />
-            <ErrorMessage message={formState.errors.name?.message} />
-          </div>
-
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -65,14 +67,27 @@ function SignUp() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("email", {
-                required: "Email é obrigatório.",
-                pattern: emailPattern,
-              })}
+              {...register("email")}
             />
             <ErrorMessage message={formState.errors.email?.message} />
           </div>
-
+          <div className="flex flex-col gap-2">
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <InputForm
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="Nome"
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+              {...register("name")}
+            />
+            <ErrorMessage message={formState.errors.name?.message} />
+          </div>
           <div className="flex flex-col gap-2">
             <Controller
               control={control}
@@ -86,13 +101,10 @@ function SignUp() {
                   onChange={field.onChange}
                 />
               )}
-              {...register("password", {
-                required: "Senha precisa ser preenchida.",
-              })}
+              {...register("password")}
             />
             <ErrorMessage message={formState.errors.password?.message} />
           </div>
-
           <div className="w-full flex flex-col items-center gap-3">
             <CreateClientButton />
             <p className="text-zinc-50 underline hover:text-gray-300 cursor-pointer text-sm">
@@ -101,6 +113,8 @@ function SignUp() {
           </div>
         </form>
       </div>
+      <ToastContainer />
+      {isLoading && <Spinner />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 
 import SignIn from "../pages/signin/signin";
 import SignUp from "../pages/signup/signup";
+import Profile from "../pages/profile/profile";
 
 const RoutesOfAplication = () => {
   return (
@@ -12,6 +13,7 @@ const RoutesOfAplication = () => {
 
         <Route element={<SignIn />} path="signin" />
         <Route element={<SignUp />} path="signup" />
+        <Route element={<Profile />} path="profile" />
       </Routes>
     </BrowserRouter>
   );

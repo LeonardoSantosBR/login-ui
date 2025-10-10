@@ -13,16 +13,18 @@ import ToastSuccessMessage from "../../components/error/toast/success.message";
 import { AxiosError } from "axios";
 import ToastErrorMessage from "../../components/error/toast/toast-error-message";
 import { patchProfileHttp } from "../../http/patch-profile";
+import { ToastContainer } from "react-toastify";
 
 function Profile() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { register, control, handleSubmit, reset } = useForm<IPatchClientRequest>({
-    defaultValues: {
-      email: "",
-      name: "",
-    },
-  });
+  const { register, control, handleSubmit, reset } =
+    useForm<IPatchClientRequest>({
+      defaultValues: {
+        email: "",
+        name: "",
+      },
+    });
 
   const { data } = useQuery({
     queryKey: ["profile", getUserId()],
@@ -38,7 +40,7 @@ function Profile() {
       queryClient.invalidateQueries({ queryKey: ["profile", getUserId()] });
     },
     onError: (error) => {
-      let errorMessage = "Login falhou por algo em exceção.";
+      let errorMessage = "Houve um erro ao atualizar sua conta.";
       if (error instanceof AxiosError) {
         errorMessage = error.response?.data.message;
         ToastErrorMessage({ errorMessage });
@@ -107,6 +109,7 @@ function Profile() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

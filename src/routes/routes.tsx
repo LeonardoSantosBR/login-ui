@@ -10,7 +10,6 @@ const RoutesOfAplication = () => {
       <Routes>
         //rota padrão
         <Route element={<Navigate to="/signin" />} path="/" />
-
         <Route element={<SignIn />} path="signin" />
         <Route element={<SignUp />} path="signup" />
         <Route element={<Profile />} path="profile" />

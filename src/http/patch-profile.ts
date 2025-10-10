@@ -18,5 +18,6 @@ export async function patchProfileHttp({
   );
 
   const response = await request.data;
+  console.log(response);
   return response;
 }
